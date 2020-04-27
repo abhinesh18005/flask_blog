@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+  <article class="media content-section">
+    <div class="media-body">
+      <h2><a class="article-title"> Categories </a></h2>
+    </div>
+  </article>
+  {% for cat in category %}
+      <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            <a class="mr-2" >{{ cat.name }}</a>
+            <a class="mr-2" href="{{ url_for('products',list_id=cat.id) }}"> Products </a>
+            <a class="mr-2" href="{{ url_for('products_to_sell',list_id=cat.id) }}"> Products_to_sell </a>
+            <a class="mr-2" href="{{ url_for('products_to_rent',list_id=cat.id) }}"> Products_to_rent </a>
+          </div>
+          <p class="article-content">{{ cat.description }}</p>
+        </div>
+      </article>
+  {% endfor %}
+{% endblock content %}

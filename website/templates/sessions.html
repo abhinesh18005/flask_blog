@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+    
+    <article class="media content-section">
+        <div class="b">
+            <div class="article-metadata">
+                <h2><a class="article-title"> Sessions </a></h2>
+            </div>
+        {% for pro in sessions_list %}
+            <a>UserID : {{ pro.userID }}</a>
+            <p>SessionsID : {{ pro.sessionsID }}</p>
+        {% endfor %}
+        </div>
+    </article>
+{% endblock content %}

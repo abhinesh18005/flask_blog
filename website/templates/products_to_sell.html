@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+    <article class="media content-section">
+        <div class="media-body">
+            <h2><a class="article-title"> Products For Sell </a></h2>
+        </div>
+    </article>
+    {% for pro in product_sell_list %}
+        <article class="media content-section">
+          <div class="b">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ pro.name }}</a>
+            </div>
+            <p>PID : {{ pro.pid }}</p>
+            <p>Price : {{ pro.price }}</p>
+            <p>UserID : {{ pro.userid }}</p>
+            <p>CategoryID : {{ pro.categoryid }}</p>
+            <p>Stars : {{ pro.stars }}</p>
+            <p>Location : {{ pro.location }}</p>
+            <p>City : {{ pro.city }}</p>
+            <p>Country : {{ pro.country }}</p>
+            <p> DateAdded : {{ pro.date_added }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
