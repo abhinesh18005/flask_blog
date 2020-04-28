@@ -7,7 +7,7 @@ extract flask_blog file
 open terminal go to the flask_blog directory "the inner directory which contains routes.py"
 run following two command
 export FLASK_APP=routes.py
-run flask
+flask run
 
 then got to "http://127.0.0.1:5000/"
 
