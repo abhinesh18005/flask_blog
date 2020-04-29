@@ -64,4 +64,8 @@ Brief description of role of each file in the repo.
    </ol> </li> <br>
    
  <li> <Strong> README.md </Strong></li>
+ <li> <Strong>  database_doc.pdf</Strong>: Information regarding the database modelling</li>
 </ul>
+
+# Database
+All the information regarding the database is present @ database_doc.pdf  
