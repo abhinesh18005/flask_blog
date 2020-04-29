@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+    <article class="media content-section">
+        <div class="media-body">
+            <h2><a class="article-title"> Employees </a></h2>
+        </div>
+    </article>
+    {% for pro in employees_list %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ pro.name }}</a>
+            </div>
+            <p>DOB : {{ pro.dob }}</p>
+            <p>Salary : {{ pro.salary }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

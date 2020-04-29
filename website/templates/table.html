@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <form method="post" action="/table/{{id}}">      
+        <fieldset>      
+            <h2>Selects attributes</h2> 
+            {% for pro in columns %}
+                <input type="checkbox" name={{pro.name}} value={{pro.name}}>{{pro.name}}<br>
+            {% endfor %}          
+            <br>      
+            where :
+            <select name="1">
+              <option>Select attributes:</option>
+              {% for pro in columns %}
+                  <option> {{pro.name}}</option>
+              {% endfor %}
+            </select>
+    
+            <select name="2">
+              {% for pro in columns2 %}
+                <option> {{pro.name}}</option>
+              {% endfor %}
+            </select>
+    
+            <input type="text" name="3"><br><br>     
+            order by :
+
+            <select name="4">
+                <option>Select attributes:</option>
+                {% for pro in columns %}
+                  <option> {{pro.name}}</option>
+                {% endfor %}
+            </select>
+
+            <select name="5">
+                <option>asc</option>
+                <option>desc</option>
+            </select>
+            <br><br> 
+            <input type="submit" value="Submit now" />      
+        </fieldset>
+      </form>
+
+    
+
+{% endblock content %}

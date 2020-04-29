@@ -1,0 +1,63 @@
+<title>Home - data visualization</title>
+
+<!-- Normal iframes static -->
+<style type="text/css">
+	.heading {
+		font-weight: 1000;
+		color: white;
+		background-color: black;
+		padding: 10px 10px 10px 10px;
+		text-align: center;
+		font-style: italic;
+		font-size: 40px;
+		margin-top: 70px;
+	}
+
+
+</style>
+
+<body style="margin: 0px;">
+
+	<H1 class="heading">DATA VISUALIZATION</H1>
+
+	<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plotly.com/~Himanshu-Garg/12.embed" height="525" width="100%"></iframe>
+
+	<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plotly.com/~Himanshu-Garg/108.embed" height="525" width="100%"></iframe>
+
+	<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plotly.com/~Himanshu-Garg/3.embed" height="525" width="30%"></iframe>
+
+	<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plotly.com/~Himanshu-Garg/9.embed" height="525" width="69%"></iframe>
+
+	<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plotly.com/~Himanshu-Garg/18.embed" height="525" width="59%"></iframe>
+
+	<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plotly.com/~Himanshu-Garg/16.embed" height="525" width="40%"></iframe>
+
+	<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plotly.com/~Himanshu-Garg/7.embed" height="525" width="49%"></iframe>
+
+	<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plotly.com/~Himanshu-Garg/14.embed" height="525" width="50%"></iframe>
+
+	<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plotly.com/~Himanshu-Garg/21.embed" height="525" width="70%"></iframe>
+
+	<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plotly.com/~Himanshu-Garg/26.embed" height="525" width="29.5%"></iframe>
+
+	<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plotly.com/~Himanshu-Garg/28.embed" height="525" width="44%"></iframe>
+
+	<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plotly.com/~Himanshu-Garg/38.embed" height="525" width="55.5%"></iframe>
+
+	<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plotly.com/~Himanshu-Garg/31.embed" height="525" width="65%"></iframe>
+
+	<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plotly.com/~Himanshu-Garg/34.embed" height="525" width="34.5%"></iframe>
+
+</body>
+
+
+
+
+{% extends "layout.html" %}
+{% block content %}
+  <article class="media content-section">
+    <div class="media-body">
+      <a class="mr-2" href="{{ url_for('refresh')}}"> Refresh Graphs </a>
+    </div>
+  </article>
+{% endblock content %}

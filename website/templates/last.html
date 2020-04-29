@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+    
+
+
+    <h2>{{headline}}</h2>
+    <table class="centered thick-border">
+    <tr>
+      {% for k in columns %}
+            <th>{{k}}</th>
+      {% endfor %}
+    </tr>
+    {% for p in dates %}
+      <tr>
+        {% for k,v in p.items() %}
+          <td>{{ v }}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+    
+        
+
+{% endblock content %}

@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+    <article class="media content-section">
+        <div class="media-body">
+            <h2><a class="article-title"> Owners </a></h2>
+        </div>
+    </article>
+    {% for pro in user_list %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ pro.name }}</a>
+            </div>
+            <p>UserID : {{ pro.userid }}</p>
+            <p>Stars : {{ pro.stars }}</p>
+            <p>Address : {{ pro.address }}</p>
+            <p>city : {{ pro.city }}</p>
+            <p>country : {{ pro.country }}</p>
+            <p>contactno : {{ pro.contactno }}</p>
+            <p>emailid : {{ pro.emailid }}</p>
+            <p>pincode : {{ pro.pincode }}</p>
+            <p>date_added : {{ pro.date_added }}</p>
+            <p>last_active : {{ pro.last_active }}</p>
+            <p>dob : {{ pro.dob }}</p>
+            <p>gender : {{ pro.gender }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

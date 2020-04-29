@@ -3,6 +3,13 @@ from mysql.connector import errorcode
 import chart_studio.plotly as py
 import pandas as pd
 import plotly.express as px
+from  plotly.offline import plot
+
+import chart_studio
+username = 'Himanshu-Garg' # your username
+api_key = 'nLqtpD58Yt6zN2nMlR6p' # your api key - go to profile > settings > regenerate key
+print("verification done successfully")
+chart_studio.tools.set_credentials_file(username=username, api_key=api_key)
 
 config = {
   'host':'dbms-proj-server.mysql.database.azure.com',
@@ -174,3 +181,6 @@ py.plot(fig, filename = 'Revenue Generated per Month (sold vs rented)', auto_ope
 fig = px.pie(df, values='Price', names='type', title='Total Revenue by type (rented vs sold)')
 #fig.show()
 py.plot(fig, filename = 'Total Revenue by type (rented vs sold)', auto_open=False)
+
+print("all graphs successfully refreshed")
+
