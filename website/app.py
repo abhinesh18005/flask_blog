@@ -2,6 +2,7 @@ from flask import Flask, render_template, flash, request, jsonify, url_for, redi
 import mysql.connector
 from mysql.connector import errorcode
 from forms import QueryForm
+import difflib
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'AkDODUStAGmDbLWkYcgFDw'
@@ -29,6 +30,35 @@ def re_connect():
     conn = mysql.connector.connect(**config)
     cursor = conn.cursor()
     print("reconnecting to the database")
+
+all_table_names = []
+def fill_all_table_names():
+    global all_table_names
+    all_table_names = []
+    try:
+        cursor.execute("show tables;")
+    except:
+        re_connect()
+        cursor.execute("show tables;")
+    results = cursor.fetchall()
+    for i in results:
+        all_table_names.append(i[0])
+
+def get_column_names(table_name):
+    query = "SHOW COLUMNS FROM antique_store." + table_name + ";"
+    try:
+        cursor.execute(query)
+    except:
+        re_connect()
+        cursor.execute(query)
+
+    column_names = []
+    results = cursor.fetchall()
+    for i in results:
+        column_names.append(i[0])
+    return column_names
+
+
 
 
 @app.route("/")
@@ -127,6 +157,7 @@ def table(id):
 def last(id1,id2,c1,c2,c3,c4,c5):
     #print(id2)
     #print(c1,c2,c3,"hhhhhh")
+    c3 = c3.replace("'","")
     c3="'"+c3+"'"
 
     if(c1=='Select attributes:'):
@@ -450,7 +481,39 @@ def runquery():
             columns = cursor.column_names
             query_results = results
         except Exception as e:
-            flash('Error: ' + str(e),'danger')
+            if ("Table" in str(e)) and ("doesn't exist" in str(e)):
+                # means has to suggest table also...
+                if all_table_names==[]:
+                    fill_all_table_names()
+                last_index = str(e).find("' doesn't")
+                first_index = str(e).find("'antique_store")
+                suggestion = difflib.get_close_matches(str(e)[first_index+15:last_index], all_table_names)
+                #print('Error: ' + str(e) + "\n Do you mean: " + str(suggestion))
+                if(suggestion==[]):
+                    message = 'Error: ' + str(e) + "... NO table found in the database with similar name "
+                else:
+                    message = 'Error: ' + str(e) + "... Do you mean: " + str(suggestion)
+                flash(message,'danger')
+
+            elif "Unknown column" in str(e):
+                first_index = 16 + str(e).find("Unknown column")
+                last_index = str(e).find("' in 'field list'")
+                column_name_inserted = str(e)[first_index: last_index]
+                q = str(form.query.data)
+                table_name = q[q.find("from")+5:-1]
+                column_names = get_column_names(table_name)
+                #print(column_names)
+                #print(column_name_inserted)
+                suggestion = difflib.get_close_matches(column_name_inserted, column_names)
+                if(suggestion==[]):
+                    message = 'Error: ' + str(e) + "...... NO column found in the table with similar name "
+                else:
+                    message = 'Error: ' + str(e) + "...... Do you mean: " + str(suggestion)
+                flash(message,'danger')
+
+
+            else:
+                flash('Error: ' + str(e),'danger')
         else:
             flash('Query run successfully!', 'success')
     # if request.method == 'POST':
