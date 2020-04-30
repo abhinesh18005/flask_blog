@@ -36,6 +36,10 @@ We have the following tabs:
 
 <img width="1440" alt="Screenshot 2020-04-29 at 11 49 12 PM" src="https://user-images.githubusercontent.com/43913398/80631881-0b618000-8a74-11ea-9246-4e398a20ceb2.png">
 
+# Some of the Bonus features
+![Picture1](https://user-images.githubusercontent.com/43913398/80689788-75693c00-8aeb-11ea-8058-f076fa4ebcdc.png)
+
+
 
 # Technology Stack ...
 
