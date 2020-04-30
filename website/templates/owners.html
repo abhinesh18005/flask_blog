@@ -3,13 +3,14 @@
     <article class="media content-section">
         <div class="media-body">
             <h2><a class="article-title"> Owners </a></h2>
+            <a href="{{ url_for('users') }}">Back to all users</a>
         </div>
     </article>
     {% for pro in user_list %}
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{ pro.name }}</a>
+              <a class="mr-2" href="{{ url_for('userdetails',list_id=pro.userid)}}">{{ pro.name }}</a>
             </div>
             <p>UserID : {{ pro.userid }}</p>
             <p>Stars : {{ pro.stars }}</p>

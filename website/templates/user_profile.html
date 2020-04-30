@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <h2><a class="article-title"> {{pro.name}} </a></h2>
+            </div>
+        </div>
+    </article>
+    <article class="media content-section">
+      <div class="media-body">
+        <p>UserID : {{ pro.userid }}</p>
+        <p>Address : {{ pro.address }}</p>
+        <p>city : {{ pro.city }}</p>
+        <p>country : <a href="{{ url_for('userbycountry', name=pro.country)}}">{{ pro.country }}</a></p>
+        <p>contactno : {{ pro.contactno }}</p>
+        <p>emailid : {{ pro.emailid }}</p>
+        <p>pincode : {{ pro.pincode }}</p>
+        <p>date_added : {{ pro.date_added }}</p>
+        <p>last_active : {{ pro.last_active }}</p>
+        <p>dob : {{ pro.dob }}</p>
+        <p>gender : {{ pro.gender }}</p>
+      </div>
+    </article>
+{% endblock content %}

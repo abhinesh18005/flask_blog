@@ -4,7 +4,7 @@
         <div class="media-body">
             <div class="article-metadata">
                 <h2><a class="article-title"> Users </a></h2>
-                <a href="{{ url_for('owners') }}"> Owners </a>
+                <a href="{{ url_for('owners') }}">Owners</a>
             </div>
         </div>
     </article>
@@ -12,12 +12,12 @@
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{ pro.name }}</a>
+              <a class="mr-2" href="{{ url_for('userdetails',list_id=pro.userid)}}">{{ pro.name }}</a>
             </div>
             <p>UserID : {{ pro.userid }}</p>
             <p>Address : {{ pro.address }}</p>
             <p>city : {{ pro.city }}</p>
-            <p>country : {{ pro.country }}</p>
+            <p>country : <a href="{{ url_for('userbycountry', name=pro.country)}}">{{ pro.country }}</a></p>
             <p>contactno : {{ pro.contactno }}</p>
             <p>emailid : {{ pro.emailid }}</p>
             <p>pincode : {{ pro.pincode }}</p>

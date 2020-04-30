@@ -2,12 +2,12 @@
 {% block content %}
     <article class="media content-section">
         <div class="media-body">
-            <h2><a class="article-title"> Select Tables </a></h2>
+            <h2><a class="article-title"> Select Table </a></h2>
         </div>
     </article>
     <form action="/select" method="post">
     <select name="input">
-        <option>Select tables:</option>
+        <option>Select table:</option>
         {% for pro in tables %}
             <option> {{pro.name}}</option>
         {% endfor %}

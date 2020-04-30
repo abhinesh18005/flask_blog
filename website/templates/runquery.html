@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+<div class="row" width=100%>
+  <div class="col-md-8" width=100%>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+</div>
+</div>
+    <div class="content_section">
+      <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+          <legend class="border_bottom mb-4">Run a query</legend>
+          <div class="form-group" >
+            <!-- {{ form.query.label(class="form-control-label") }} -->
+            <!-- {{ form.query(class="form-control form-control-lg") }} -->
+
+            {% if form.query.errors %}
+              {{ form.query(class="form-control form-control-lg is-invalid") }}
+              <div class="invalid-feedback">
+                {% for errors in form.query.errors %}
+                  <span> {{ error }} </span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.query(class="form-control form-control-lg") }}
+            {% endif %}
+            
+          </div>
+        </fieldset>
+        <div class="form-group">
+          {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+      </form>
+      <div>
+        <p>{{ query_results|length }} Search results</p>
+        {% if query_results %}
+        <!-- <form action="/runquery" method="post">
+          <input class = "btn" name="export_btn" type="submit" value="export to csv">
+        </form> -->
+
+        <table class="table table-fixed table-hover table-bordered mb-0">
+          <thead class="thead-dark">
+            <tr>
+              {% for col in columns %}
+                <th scope="col"> {{ col }} </th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody> 
+            {% for row in query_results %}
+            <tr>
+              <!-- <th scope="row"> -->
+                {% for val in row %}
+                  <td> {{ val }} </td>
+                {% endfor %}
+              <!-- </th> -->
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+      </div>
+    </div>
+
+    </div>
+    
+
+{% endblock content %}

@@ -1,4 +1,4 @@
-#!/Users/himanshu/Desktop/flask_blog/venv/bin/python
+#!/Users/himanshu/Desktop/website/venv/bin/python
 
 import sys
 import getopt

@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, jsonify, url_for, redirect
+from flask import Flask, render_template, flash, request, jsonify, url_for, redirect
 import mysql.connector
 from mysql.connector import errorcode
+from forms import QueryForm
 
 app = Flask(__name__)
-
+app.config['SECRET_KEY'] = 'AkDODUStAGmDbLWkYcgFDw'
 
 
 config = {
@@ -279,6 +280,56 @@ def owners():
     return render_template('owners.html', user_list=user_list,title='Owners')
 
 
+@app.route("/users/profile/<list_id>")
+def userdetails(list_id):
+    try:
+        cursor.execute("select * from user where userid = '" + list_id +"';")
+    except:
+        re_connect()
+        cursor.execute("select * from user where userid = '" + list_id +"';")
+    
+    row = cursor.fetchone()
+    userid = row[0]
+    name = row[1]
+    address = row[2]
+    city = row[3]
+    country = row[4]
+    contactno = row[5]
+    emailid = row[6]
+    pincode = row[7]
+    date_added = row[8]
+    last_active = row[9]
+    dob = row[10]
+    gender = row[11]
+    results = {'userid':userid,'name':name,'address':address,'city':city,'country':country,'contactno':contactno,'emailid':emailid,'pincode':pincode,'date_added':date_added,'last_active':last_active,'dob':dob,'gender':gender}
+    return render_template('user_profile.html', pro=results,title='User Profile: '+name)
+
+@app.route("/users/Country/<name>")
+def userbycountry(name):
+    try:
+        cursor.execute("select * from user where country = '" + name +"';")
+    except:
+        re_connect()
+        cursor.execute("select * from user where country = '" + name +"';")
+    
+    user_list = []
+    results = cursor.fetchall()
+    cname = name
+    for row in results:
+        userid = row[0]
+        name = row[1]
+        address = row[2]
+        city = row[3]
+        country = row[4]
+        contactno = row[5]
+        emailid = row[6]
+        pincode = row[7]
+        date_added = row[8]
+        last_active = row[9]
+        dob = row[10]
+        gender = row[11]
+        user_list.append({'userid':userid,'name':name,'address':address,'city':city,'country':country,'contactno':contactno,'emailid':emailid,'pincode':pincode,'date_added':date_added,'last_active':last_active,'dob':dob,'gender':gender})
+    return render_template('user_by_country.html', user_list=user_list,title='Search by: '+cname,country=cname)
 
 
 @app.route("/categories/products/<list_id>")
@@ -288,6 +339,7 @@ def products(list_id):
     except:
         re_connect()
         cursor.execute("select * from products where CategoryID='"+list_id+"';")
+
     
     product_list = []
     results = cursor.fetchall()
@@ -349,7 +401,6 @@ def products_to_rent(list_id):
     except:
         re_connect()
         cursor.execute("select * from products_to_rent;")
-    
     results = cursor.fetchall()
     product_list = {}
     for row in results:
@@ -377,6 +428,44 @@ def products_to_rent(list_id):
 
     return render_template('products_to_rent.html', product_rent_list=product_rent_list,title='Products_to_rent')
 
+@app.route("/runquery", methods=['GET','POST'])
+def runquery():
+    form = QueryForm()
+    query_results = []
+    columns = []
+    if form.validate_on_submit():
+        try:
+            s = str(form.query.data)
+            s = s.strip()
+            if s.find(';') == -1:
+                raise Exception("Semicolon (;) missing")
+            if s.find(';') != len(s)-1:
+                raise Exception("Multiple queries not allowed")
+            try:
+                cursor.execute(form.query.data)
+            except:
+                re_connect()
+                cursor.execute(form.query.data)
+            results = cursor.fetchall()
+            columns = cursor.column_names
+            query_results = results
+        except Exception as e:
+            flash('Error: ' + str(e),'danger')
+        else:
+            flash('Query run successfully!', 'success')
+    # if request.method == 'POST':
+    #     if request.form['export_btn'] == "export to csv":
+    #         si = StringIO.StringIO()
+    #         cw = csv.writer(si)
+    #         cw.writerow([columns])
+    #         cw.writerows(query_results)
+    #         response = make_response(si.getvalue())
+    #         response.headers['Content-Disposition'] = 'attachment; filename=report.csv'
+    #         response.headers["Content-type"] = "text/csv"
+    #         return response
+    return render_template('runquery.html', form=form, columns=columns, query_results=query_results, title='Run query')
+
+
 
 @app.route("/exit")
 def exit():
@@ -384,6 +473,8 @@ def exit():
     cursor.close()
     conn.close()
     return render_template('exit.html')
+
+
 
 if __name__=="__main__":
     app.run(debug=True)
