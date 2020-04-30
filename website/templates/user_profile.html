@@ -4,6 +4,9 @@
         <div class="media-body">
             <div class="article-metadata">
                 <h2><a class="article-title"> {{pro.name}} </a></h2>
+                <a class="mr-2" href="{{ url_for('users') }}">Back to all users</a>
+                <a class="mr-2" href="{{ url_for('orderhistory',list_id=pro.userid) }}">See order history</a>
+                <!-- <a class="mr-2" href="#">All products</a> -->
             </div>
         </div>
     </article>

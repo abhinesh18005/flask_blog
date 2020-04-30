@@ -19,6 +19,11 @@
             <p>City : {{ pro.city }}</p>
             <p>Country : {{ pro.country }}</p>
             <p> DateAdded : {{ pro.date_added }}</p>
+            <p>To:
+              {% for type in pro.to %}
+              <a class="mr2" href=" {{ url_for('products_to_'+type,list_id=pro.categoryid) }}">{{ type }}</a>
+              {% endfor %}
+            </p>
           </div>
         </article>
     {% endfor %}

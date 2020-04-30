@@ -365,14 +365,12 @@ def userbycountry(name):
 
 @app.route("/categories/products/<list_id>")
 def products(list_id):
+    product_list = []
     try:
-        cursor.execute("select * from products where CategoryID='"+list_id+"';")
+        cursor.execute("select * from products as A, products_to_rent as B, products_to_sell as C where CategoryID='"+list_id+"' and A.PID=B.PID and B.PID = C.PID;")
     except:
         re_connect()
-        cursor.execute("select * from products where CategoryID='"+list_id+"';")
-
-    
-    product_list = []
+        cursor.execute("select * from products as A, products_to_rent as B, products_to_sell as C where CategoryID='"+list_id+"' and A.PID=B.PID and B.PID = C.PID;")
     results = cursor.fetchall()
     for row in results:
         pid = row[0]
@@ -384,10 +382,45 @@ def products(list_id):
         city = row[6]
         country = row[7]
         date_added = row[9]
-        product_list.append({'pid':pid,'userid':userid,'categoryid':categoryid,'name':name,'stars':stars,'location':location,'city':city,'country':country,'date_added':date_added})
-
+        to = ['sell','rent']
+        product_list.append({'pid':pid,'userid':userid,'categoryid':categoryid,'name':name,'stars':stars,'location':location,'city':city,'country':country,'date_added':date_added,'to':to})
+    try:
+        cursor.execute("select * from products as A, products_to_rent as B where CategoryID='"+list_id+"' and A.PID=B.PID and A.PID not in (Select PID from products_to_sell);")
+    except:
+        re_connect()
+        cursor.execute("select * from products as A, products_to_rent as B where CategoryID='"+list_id+"' and A.PID=B.PID and A.PID not in (Select PID from products_to_sell);")
+    results = cursor.fetchall()
+    for row in results:
+        pid = row[0]
+        userid = row[1]
+        categoryid = row[2]
+        name = row[3]
+        stars = row[4]
+        location = row[5]
+        city = row[6]
+        country = row[7]
+        date_added = row[9]
+        to = ["rent"]
+        product_list.append({'pid':pid,'userid':userid,'categoryid':categoryid,'name':name,'stars':stars,'location':location,'city':city,'country':country,'date_added':date_added,'to':to})
+    try:
+        cursor.execute("select * from products as A, products_to_sell as B where CategoryID='"+list_id+"' and A.PID=B.PID and A.PID not in (Select PID from products_to_rent);")
+    except:
+        re_connect()
+        cursor.execute("select * from products as A, products_to_sell as B where CategoryID='"+list_id+"' and A.PID=B.PID and A.PID not in (Select PID from products_to_rent);")
+    results = cursor.fetchall()
+    for row in results:
+        pid = row[0]
+        userid = row[1]
+        categoryid = row[2]
+        name = row[3]
+        stars = row[4]
+        location = row[5]
+        city = row[6]
+        country = row[7]
+        date_added = row[9]
+        to = ['sell']
+        product_list.append({'pid':pid,'userid':userid,'categoryid':categoryid,'name':name,'stars':stars,'location':location,'city':city,'country':country,'date_added':date_added,'to':to})
     return render_template('products.html', product_list=product_list,title='Products')
-
 
 @app.route("/categories/products_to_sell/<list_id>")
 def products_to_sell(list_id):
@@ -527,6 +560,34 @@ def runquery():
     #         response.headers["Content-type"] = "text/csv"
     #         return response
     return render_template('runquery.html', form=form, columns=columns, query_results=query_results, title='Run query')
+
+
+
+@app.route("/users/profile/<list_id>/order_history")
+def orderhistory(list_id):
+    cursor.execute("select * from orders where userid = '" + list_id +"';")
+    results = cursor.fetchall()
+    user_list = []
+    for row in results:
+        oid = row[0]
+        uid = row[1]
+        sessionid = row[2]
+        amt = row[3]
+        paymentmode = row[4]
+        did = row[5]
+        user_list.append({'oid':oid,'uid':uid,'sessionid':sessionid,'amt':amt,'paymentmode':paymentmode,'did':did})
+    return render_template('order_history.html', user_list=user_list,title='Order History: '+list_id,userid=list_id)
+
+
+@app.route("/users/profile/<list_id>/<order_id>")
+def orderdetails(list_id,order_id):
+    cursor.execute("select * from orderdetails where orderid = '" + order_id +"';")
+    results = cursor.fetchall()
+    user_list = []
+    for row in results:
+        user_list.append([row[1],row[2],row[3]])
+    return render_template('order_details.html', columns = ['PID','Price','Type'],user_list=user_list,title='Order Details for ' + list_id + ': ' +order_id)
+
 
 
 

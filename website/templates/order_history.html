@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+    <article class="media content-section">
+        <div class="media-body">
+            <h2><a class="article-title">{{title}}</a></h2>
+            <a href="{{ url_for('userdetails',list_id=userid) }}">Back to profile</a>
+        </div>
+    </article>
+    {% for pro in user_list %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{{ url_for('orderdetails',list_id=pro.uid,order_id=pro.oid) }}">{{ pro.oid }}</a>
+            </div>
+            <p>Session ID : {{ pro.sessionID }}</p>
+            <p>Amount paid : {{ pro.amt }}</p>
+            <p>Payment Mode : {{ pro.paymentmode }}</p>
+            <p>Delivery ID : {{ pro.did }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
